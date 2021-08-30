@@ -8,29 +8,34 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"car"})
 @NoArgsConstructor
 
-public class User implements Comparable<User> {
+public class User {
     @Column(nullable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "user")
+    private Car car;
 
     public User(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
+    public User(int id, String name, Car car) {
+        this.id = id;
+        this.name = name;
+        this.car = car;
+    }
+
     public User(String name) {
         this.name = name;
     }
 
-    @Override
-    public int compareTo(User o) {
-//        System.out.println(this);
-        return this.getId() - o.getId();
-//        return this.getName().compareTo(o.getName());
-    }
 }
