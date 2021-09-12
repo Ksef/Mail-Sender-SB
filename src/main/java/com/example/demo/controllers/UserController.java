@@ -1,7 +1,6 @@
 package com.example.demo.controllers;
 
 import com.example.demo.dao.UserDAO;
-import com.example.demo.models.Car;
 import com.example.demo.models.User;
 import com.example.demo.services.MailService;
 import lombok.AllArgsConstructor;
@@ -33,6 +32,13 @@ public class UserController {
         userDAO.save(user);
         mailService.sendMyMessage(user);
     }
+
+    @GetMapping("/activate/{id}")
+    public void activateUser(@PathVariable int id) {
+        User user = userDAO.getById(id);
+        user.setActivated(true);
+        userDAO.save(user);
+    }
     @PostMapping("")
     public User saveUser(@RequestBody User user) {
         userDAO.save(user);
@@ -42,8 +48,6 @@ public class UserController {
         //2. service
         //3. config prop file
         return user;
-
-
     }
 
     @GetMapping("/{id}")
@@ -63,14 +67,4 @@ public class UserController {
         userDAO.deleteById(id);
     }
 
-    @PostMapping("/saveUserWithCar")
-    public void saveUserWIthCar(@RequestBody User user) {
-        System.out.println(user);
-
-
-        userDAO.save(user);
-        Car car = user.getCar();
-        car.setUser(user);
-//        carDao.save(car);
-    }
 }

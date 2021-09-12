@@ -8,7 +8,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@ToString(exclude = {"car"})
 @NoArgsConstructor
 
 public class User {
@@ -18,13 +17,8 @@ public class User {
     private int id;
     private String name;
     private String password;
-    @OneToOne(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "user")
-    private Car car;
-
     private String email;
+    private boolean isActivated = false;
 
     public User(int id, String name) {
         this.id = id;
@@ -35,13 +29,6 @@ public class User {
         this.name = name;
         this.password = password;
         this.email = email;
-    }
-
-
-    public User(int id, String name, Car car) {
-        this.id = id;
-        this.name = name;
-        this.car = car;
     }
 
     public User(String name) {

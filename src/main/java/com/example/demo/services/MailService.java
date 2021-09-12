@@ -28,12 +28,12 @@ public class MailService {
         try {
             mimeMessage.setFrom(new InternetAddress(Objects.requireNonNull(env.getProperty("spring.mail.username"))));
             helper.setTo(user.getEmail());
-            helper.setText("<h1>hello " +user.getName()+ "</h1> <div>yout login is - " + user.getName() + "</div>", true);
+            helper.setText("to activate <a href='http://localhost:8080/users/activate/"
+                    +user.getId() + "'>click here</a>", true);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
         javaMailSender.send(mimeMessage);
-        //
     }
 
 
