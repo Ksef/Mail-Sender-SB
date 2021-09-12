@@ -17,16 +17,26 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    private String password;
     @OneToOne(
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "user")
     private Car car;
 
+    private String email;
+
     public User(int id, String name) {
         this.id = id;
         this.name = name;
     }
+
+    public User(String name, String password, String email) {
+        this.name = name;
+        this.password = password;
+        this.email = email;
+    }
+
 
     public User(int id, String name, Car car) {
         this.id = id;
